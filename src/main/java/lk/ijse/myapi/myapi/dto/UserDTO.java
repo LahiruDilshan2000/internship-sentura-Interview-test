@@ -39,5 +39,4 @@ public class UserDTO {
     private String modified_at;
     private boolean is_suspended;
     private boolean is_trashed;
-
 }

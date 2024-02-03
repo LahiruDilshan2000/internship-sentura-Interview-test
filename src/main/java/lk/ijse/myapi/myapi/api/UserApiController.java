@@ -21,7 +21,7 @@ public class UserApiController {
         return new ResponseUtil();
     }
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseUtil saveUser(@RequestBody UserDTO userDTO, @RequestHeader("Authorization") String token){
 
         HttpHeaders headers = new HttpHeaders();
@@ -39,8 +39,8 @@ public class UserApiController {
                 UserDTO.class);
 
         if (requestEntity.getBody() != null){
-            return new ResponseUtil(201, "User save successfully", response);
+            return new ResponseUtil(201, "User save successfully", response.getBody());
         }
-        return new ResponseUtil(500, "Error", null);
+        return new ResponseUtil(200, "Error", null);
     }
 }
