@@ -28,6 +28,8 @@ public class UserApiController {
         headers.set("Authorization", token);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
+        System.out.println(userDTO);
+
         HttpEntity<UserDTO> requestEntity = new HttpEntity<>(userDTO, headers);
 
         ResponseEntity<UserDTO> response = restTemplate.exchange(
@@ -36,6 +38,6 @@ public class UserApiController {
                 requestEntity,
                 UserDTO.class);
 
-        return new ResponseUtil(201, "ok", response);
+        return new ResponseUtil(201, "User save successfully", response);
     }
 }
