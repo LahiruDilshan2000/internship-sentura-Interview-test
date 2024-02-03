@@ -38,6 +38,9 @@ public class UserApiController {
                 requestEntity,
                 UserDTO.class);
 
-        return new ResponseUtil(201, "User save successfully", response);
+        if (requestEntity.getBody() != null){
+            return new ResponseUtil(201, "User save successfully", response);
+        }
+        return new ResponseUtil(500, "Error", null);
     }
 }
