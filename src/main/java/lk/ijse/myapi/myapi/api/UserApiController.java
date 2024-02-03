@@ -3,6 +3,7 @@ package lk.ijse.myapi.myapi.api;
 import lk.ijse.myapi.myapi.dto.UserDTO;
 import lk.ijse.myapi.myapi.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,11 +24,18 @@ public class UserApiController {
     @PostMapping
     public ResponseUtil saveUser(@RequestBody UserDTO userDTO, @RequestHeader("Authorization") String token){
 
-        System.out.println(token);
-        /*UserDTO userDTO1 = restTemplate
-                .postForObject("https://0ac93198ac14481b8222420b17b7ee7e.weavy.io/api/users", userDTO, UserDTO.class);*/
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
+        HttpEntity<UserDTO> requestEntity = new HttpEntity<>(userDTO, headers);
 
-        return new ResponseUtil(201, "ok", null);
+        ResponseEntity<UserDTO> response = restTemplate.exchange(
+                "https://0ac93198ac14481b8222420b17b7ee7e.weavy.io/api/users",
+                HttpMethod.POST,
+                requestEntity,
+                UserDTO.class);
+
+        return new ResponseUtil(201, "ok", response);
     }
 }
